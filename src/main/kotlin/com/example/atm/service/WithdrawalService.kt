@@ -5,6 +5,7 @@ import com.example.atm.models.DefaultResponse
 import com.example.atm.models.VerifyResponse
 import com.example.atm.models.WithdrawalModel
 import com.example.atm.repository.WithdrawalRepository
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
@@ -25,10 +26,15 @@ class WithdrawalService(
     }
 
     fun validateWithdrawal(withdrawalId: String): ResponseEntity<VerifyResponse>{
+        val header = HttpHeaders()
+        header.set("Content-Type", "application/json")
+        header.set( "Access-Control-Allow-Origin", "*")
         return try {
             val withdrawalObject = withdrawalRepository.getWithdrawalItem(withdrawalId)
             if (withdrawalObject?.id == withdrawalId){
-                ResponseEntity(VerifyResponse(verified = true, message = "Withdrawal is verified", amount = withdrawalObject.amount), HttpStatus.OK)
+                ResponseEntity.ok()
+                    .headers(header)
+                    .body(VerifyResponse(verified = true, message = "Withdrawal is verified", amount = withdrawalObject.amount))
             }else {
                 ResponseEntity(VerifyResponse(verified = false, message = "Withdrawal is not verified", amount = ""), HttpStatus.NOT_ACCEPTABLE)
             }
