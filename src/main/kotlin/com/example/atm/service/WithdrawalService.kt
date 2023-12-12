@@ -29,6 +29,7 @@ class WithdrawalService(
         val header = HttpHeaders()
         header.set("Content-Type", "application/json")
         header.set( "Access-Control-Allow-Origin", "*")
+        header.set("Access-Control-Allow-Methods","GET")
         return try {
             val withdrawalObject = withdrawalRepository.getWithdrawalItem(withdrawalId)
             if (withdrawalObject?.id == withdrawalId){
