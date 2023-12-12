@@ -70,7 +70,7 @@ class AzureInitializer {
 
         //  Create container if not exists
         val userContainerProperties = CosmosContainerProperties(usersContainerName, "/userKey")
-        val albumContainerProperties = CosmosContainerProperties(withdrawalContainerName, "/albumKey")
+        val albumContainerProperties = CosmosContainerProperties(withdrawalContainerName, "/withdrawal")
         val userContainerResponse: CosmosContainerResponse = database!!.createContainerIfNotExists(userContainerProperties)
         val albumContainerResponse: CosmosContainerResponse = database!!.createContainerIfNotExists(albumContainerProperties)
         userContainer = database!!.getContainer(userContainerResponse.properties.id)
